@@ -281,7 +281,7 @@ function naturalLanguagePost(content) {
       if (res.entities && res.entities.length > 0) {
         for (var i = res.entities.length - 1; i >= 0; i--) {
           if (res.entities[i].metadata && res.entities[i].metadata.wikipedia_url) {
-            res.entities[i].metadata.abstract = handleSearch(res.entities[i].name);
+            wikiResults.push(handleSearch(res.entities[i].name));
           }
         }
       }
@@ -293,7 +293,7 @@ function naturalLanguagePost(content) {
 }
 
 function handleSearch(term) {
-  console.log('handle trigger');
+  console.log('handle trigger', term);
     $.ajax({
         url: '//en.wikipedia.org/w/api.php',
         data: {
@@ -304,9 +304,11 @@ function handleSearch(term) {
         },
         dataType: 'jsonp',
         success: function (data) {
+          console.log('search success');
           return data.query.search[0].snippet;
         },
         error: function (err) {
+          console.log('search error', err);
 
         }
     });
