@@ -279,6 +279,18 @@ function naturalLanguagePost(content) {
     naturalLanguageResults = JSON.stringify(res, null, '\t');
     $('#keycards').text(naturalLanguageResults);
     console.log('res', res);
+    if(Array.isArray(res.entities)){
+      var keywords = [], output = {};
+      var result = res.entities;
+      result.forEach(function(word){
+        if(word.metadata.wikipedia_url){
+          output.name = word.name;
+          output.wiki = word.metadata.wikipedia_url;
+          keywords.push(output)
+        }
+      })
+      $('#tags').text(keywords);
+    }
   });
 }
 
