@@ -1,0 +1,63 @@
+.main{
+  margin-right: 300px;
+}
+
+.main h1{
+  margin-left: 20px;
+}
+
+.person {
+  height: 300px;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.person img{
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  display: inline-block;
+}
+
+.person .image{
+  display: inline-block;
+}
+
+.person .details{
+  display: inline-block;
+  padding: 20px;
+}
+
+.sidenav{
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background: #e1e5ed
+}
+.sidenav h2{
+  font-size: 26px;
+}
+.sidenav li{
+  font-size: 24px;
+  list-style: none;
+  padding: 30px
+}
+.data{
+  height: 500px;
+  width: 100%;
+  background: blue
+}
+
+.data .column{
+  float: left;
+  width: 33.33%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
