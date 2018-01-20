@@ -61,6 +61,7 @@ var langs =
                      ['yue-Hant-HK', '粵語 (香港)']],
  ['日本語',           ['ja-JP']],
  ['Lingua latīna',   ['la']]];
+var naturalLanguageResults = {};
 
 for (var i = 0; i < langs.length; i++) {
   select_language.options[i] = new Option(langs[i][0], i);
@@ -156,6 +157,7 @@ if (!('webkitSpeechRecognition' in window)) {
     final_transcript = capitalize(final_transcript);
     final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
+    naturalLanguagePost(linebreak(interim_transcript));
     if (final_transcript || interim_transcript) {
       showButtons('inline-block');
     }
@@ -251,6 +253,33 @@ function showButtons(style) {
   email_button.style.display = style;
   copy_info.style.display = 'none';
   email_info.style.display = 'none';
+}
+
+function naturalLanguagePost(content) {
+  var postBody = {
+  "document":
+    {
+      "type": "PLAIN_TEXT",
+      "content": content
+    }
+  };
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCD_sn51pZ6YwzHl1li0FXI20MAUootLtA",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache",
+    },
+    "processData": false,
+    "data": postBody
+  }
+  $.ajax(settings).done(function (res) {
+    naturalLanguageResults = res;
+    $('#keycards').append(res);
+    console.log('res', res);
+  });
 }
 
 document.getElementById("start_button").addEventListener("click", startButton);
