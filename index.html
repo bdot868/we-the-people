@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  
+
   </head>
   <body>
     <h1 class="center" id="headline">
@@ -69,41 +69,57 @@
         <select id="select_dialect"></select>
       </div>
     </div>
-    <div class="main">
-      <h1>Topic</h1>
-      <div class="person">
-        <div class="image">
-          <img src="http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg" alt="">
-        </div>
 
-        <div class="details">
-          <h2>Donald Trump</h2>
-          <h2>Republican Nominee</h2>
-        </div>
+    <div class="phrase-page">
+      <div class="phrase-header">
+
       </div>
+      <div class="phrase">
+        <span id="final_span" class="final"></span>
+        <span id="interim_span" class="interim"></span>
+      </div>
+    </div>
 
-      <div class="data">
-        <div class="phrase column">
-          <p>recorded phrase</p>
-        </div>
-        <div class="current-news column">
-          <h2>Articles</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <div class="result-page">
+      <div class="main">
+        <h1>Topic</h1>
+        <div class="person">
+          <div class="image">
+            <img src="http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg" alt="">
+          </div>
+
+          <div class="details">
+            <h2>Donald Trump</h2>
+            <h2>Republican Nominee</h2>
+          </div>
         </div>
 
-        <div class="twitter-feed column">
-          <h2>Articles</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div class="data">
+          <div class="phrase column">
+            <p>recorded phrase</p>
+          </div>
+          <div class="current-news column">
+            <h2>Articles</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+
+          <div class="twitter-feed column">
+            <h2>Articles</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+
+        <div class="sidenav">
+          <h2>Keywords</h2>
+          <li><a href="#">daca</a></li>
+          <li><a href="#">trump</a></li>
+          <li><a href="#">haiti</a></li>
         </div>
       </div>
     </div>
 
-    <div class="sidenav">
-      <h2>Keywords</h2>
-      <li><a href="#">daca</a></li>
-      <li><a href="#">trump</a></li>
-      <li><a href="#">haiti</a></li>
-    </div>
+
+
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="speech.js"></script>
