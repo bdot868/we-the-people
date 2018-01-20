@@ -62,6 +62,7 @@ var langs =
  ['日本語',           ['ja-JP']],
  ['Lingua latīna',   ['la']]];
 var naturalLanguageResults = {};
+var wikiResults = [];
 
 for (var i = 0; i < langs.length; i++) {
   select_language.options[i] = new Option(langs[i][0], i);
@@ -256,33 +257,64 @@ function showButtons(style) {
 }
 
 function naturalLanguagePost(content) {
-  var postBody = {
-  "document":
-    {
-      "type": "PLAIN_TEXT",
-      "content": content
+  if (content) {
+    var postBody = {
+    "document":
+      {
+        "type": "PLAIN_TEXT",
+        "content": content
+      }
+    };
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCD_sn51pZ6YwzHl1li0FXI20MAUootLtA",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-cache"
+      },
+      "processData": false,
+      "data": JSON.stringify(postBody)
     }
-  };
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCD_sn51pZ6YwzHl1li0FXI20MAUootLtA",
-    "method": "POST",
-    "headers": {
-      "content-type": "application/json",
-      "cache-control": "no-cache"
-    },
-    "processData": false,
-    "data": JSON.stringify(postBody)
+    $.ajax(settings).done(function (res) {
+      if (res.entities && res.entities.length > 0) {
+        for (var i = res.entities.length - 1; i >= 0; i--) {
+          if (res.entities[i].metadata && res.entities[i].metadata.wikipedia_url) {
+            res.entities[i].metadata.abstract = handleSearch(res.entities[i].name);
+          }
+        }
+      }
+      naturalLanguageResults = JSON.stringify(res, null, '\t');
+      $('#keycards').text(naturalLanguageResults);
+      console.log('res', res);
+    });
   }
-  $.ajax(settings).done(function (res) {
-    naturalLanguageResults = JSON.stringify(res, null, '\t');
-    $('#keycards').text(naturalLanguageResults);
-    console.log('res', res);
-  });
+}
+
+function handleSearch(term) {
+  console.log('handle trigger');
+    $.ajax({
+        url: '//en.wikipedia.org/w/api.php',
+        data: {
+          action: 'query',
+          list: 'search',
+          srsearch: term,
+          format: 'json'
+        },
+        dataType: 'jsonp',
+        success: function (data) {
+          return data.query.search[0].snippet;
+        },
+        error: function (err) {
+
+        }
+    });
 }
 
 document.getElementById("start_button").addEventListener("click", startButton);
 document.getElementById("copy_button").addEventListener("click", copyButton);
 document.getElementById("email_button").addEventListener("click", emailButton);
 document.getElementById("select_language").addEventListener("change", updateCountry);
+
+
