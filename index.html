@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Result Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <link rel="stylesheet" href="result.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -13,6 +14,29 @@
   
   </head>
   <body>
+
+  <section class="app">
+    <div class="wrapper">
+      <div id="start_button" class="main-button">
+        <img src="images/icon.svg" />
+        <div id="gradient"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="listen">
+    <div class="wrapper">
+      <div class="broadcaster">
+        <h3><strong>You are Listening to</strong> Donald Trump On CNN DNC Debate Republican Nominee</h3>
+      </div>
+      <div class="audio">
+        <p id="final_span"></p>
+      </div>
+    </div>
+  </section>
+
+<div style="">
+
     <h1 class="center" id="headline">
       <a href="http://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html" target="_blank">
         Web Speech API</a> Demonstration</h1>
@@ -35,11 +59,12 @@
          version 25 or later.</p>
     </div>
     <div class="left">
-      <button id="start_button">
-        <img id="start_img" src="mic.gif" alt="Start"></button>
+<!--       <button id="start_button">
+        <img id="start_img" src="mic.gif" alt="Start">
+      </button> -->
     </div>
     <div id="results">
-      <span id="final_span" class="final"></span>
+      <!-- <span id="final_span" class="final"></span> -->
       <span id="interim_span" class="interim"></span>
       <p>
     </div>
@@ -69,6 +94,9 @@
         <select id="select_dialect"></select>
       </div>
     </div>
+
+</div>
+
     <div class="main">
       <h1>Topic</h1>
       <div class="person">
@@ -106,6 +134,7 @@
     </div>
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="speech.js"></script>
+    <script src="js/speech.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
