@@ -281,7 +281,8 @@ function naturalLanguagePost(content) {
       if (res.entities && res.entities.length > 0) {
         for (var i = res.entities.length - 1; i >= 0; i--) {
           if (res.entities[i].metadata && res.entities[i].metadata.wikipedia_url) {
-            res.entities[i].metadata.abstract = handleSearch(res.entities[i].name);
+            wikiResults.push(handleSearch(res.entities[i].name));
+            $('#wikiSnip').text(wikiResults);
           }
         }
       }
@@ -293,7 +294,7 @@ function naturalLanguagePost(content) {
 }
 
 function handleSearch(term) {
-  console.log('handle trigger');
+  console.log('handle trigger',);
     $.ajax({
         url: '//en.wikipedia.org/w/api.php',
         data: {
@@ -304,12 +305,37 @@ function handleSearch(term) {
         },
         dataType: 'jsonp',
         success: function (data) {
-          return data.query.search[0].snippet;
+          console.log('search success', data);
+          writeList(data.query.search, true);
         },
         error: function (err) {
+          console.log('search error', err);
 
         }
     });
+}
+
+//print the list
+function writeList(data, a) {
+  $(".list-group").html("");
+  for (var i = 0; i < 10; i++) {
+    if (a){
+      var snippet = data[i].snippet;
+      var line ='mdl-list__item--three-line';
+    }
+    else{
+      var snippet='';
+      var line ='';
+    }
+    $(".list-group").append(
+      '<a href="https://en.wikipedia.org/wiki/' + data[i].title +
+      '" target="_blank"><li class="list-group-item ' + line +
+      '"><span class="list-group-item-primary">' +
+       data[i].title + '</span>'+ snippet +
+       '<a class="mdl-list__item-secondary-action"  href="https://en.wikipedia.org/wiki/' +
+       data[i].title + '" target="_blank"></a></span></li></a>'
+    );
+  }
 }
 
 document.getElementById("start_button").addEventListener("click", startButton);
