@@ -27,6 +27,11 @@ jQuery(document).ready(function( $ ) {
 
     	$('.listen').css('display','block');
 
+    	$('#main').on('click', function(){
+    		$('.listen').css('display','none');
+    		$('.main').css('display','block');
+    	});
+
 		setTimeout(function(){
 			$('.broadcaster').slideDown();
 		}, 5000); 	    	
