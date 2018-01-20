@@ -62,7 +62,6 @@ var langs =
  ['日本語',           ['ja-JP']],
  ['Lingua latīna',   ['la']]];
 var naturalLanguageResults = {};
-var wikiResults = [];
 
 for (var i = 0; i < langs.length; i++) {
   select_language.options[i] = new Option(langs[i][0], i);
@@ -257,90 +256,45 @@ function showButtons(style) {
 }
 
 function naturalLanguagePost(content) {
-  if (content) {
-    var postBody = {
-    "document":
-      {
-        "type": "PLAIN_TEXT",
-        "content": content
-      }
-    };
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCD_sn51pZ6YwzHl1li0FXI20MAUootLtA",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/json",
-        "cache-control": "no-cache"
-      },
-      "processData": false,
-      "data": JSON.stringify(postBody)
+  var postBody = {
+  "document":
+    {
+      "type": "PLAIN_TEXT",
+      "content": content
     }
-    $.ajax(settings).done(function (res) {
-      if (res.entities && res.entities.length > 0) {
-        for (var i = res.entities.length - 1; i >= 0; i--) {
-          if (res.entities[i].metadata && res.entities[i].metadata.wikipedia_url) {
-            wikiResults.push(handleSearch(res.entities[i].name));
-            $('#wikiSnip').text(wikiResults);
-          }
-        }
-      }
-      naturalLanguageResults = JSON.stringify(res, null, '\t');
-      $('#keycards').text(naturalLanguageResults);
-      console.log('res', res);
-    });
+  };
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": "https://language.googleapis.com/v1/documents:analyzeEntities?key=AIzaSyCD_sn51pZ6YwzHl1li0FXI20MAUootLtA",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(postBody)
   }
-}
-
-function handleSearch(term) {
-  console.log('handle trigger',);
-    $.ajax({
-        url: '//en.wikipedia.org/w/api.php',
-        data: {
-          action: 'query',
-          list: 'search',
-          srsearch: term,
-          format: 'json'
-        },
-        dataType: 'jsonp',
-        success: function (data) {
-          console.log('search success', data);
-          writeList(data.query.search, true);
-        },
-        error: function (err) {
-          console.log('search error', err);
-
+  $.ajax(settings).done(function (res) {
+    naturalLanguageResults = JSON.stringify(res, null, '\t');
+    $('#keycards').text(naturalLanguageResults);
+    console.log('res', res);
+    if(Array.isArray(res.entities)){
+      var keywords = [], output = {};
+      var result = res.entities;
+      result.forEach(function(word){
+        if(word.metadata.wikipedia_url){
+          output.name = word.name;
+          output.wiki = word.metadata.wikipedia_url;
+          keywords.push(output)
         }
-    });
-}
-
-//print the list
-function writeList(data, a) {
-  $(".list-group").html("");
-  for (var i = 0; i < 10; i++) {
-    if (a){
-      var snippet = data[i].snippet;
-      var line ='mdl-list__item--three-line';
+      })
+      $('#tags').text(keywords);
     }
-    else{
-      var snippet='';
-      var line ='';
-    }
-    $(".list-group").append(
-      '<a href="https://en.wikipedia.org/wiki/' + data[i].title +
-      '" target="_blank"><li class="list-group-item ' + line +
-      '"><span class="list-group-item-primary">' +
-       data[i].title + '</span>'+ snippet +
-       '<a class="mdl-list__item-secondary-action"  href="https://en.wikipedia.org/wiki/' +
-       data[i].title + '" target="_blank"></a></span></li></a>'
-    );
-  }
+  });
 }
 
 document.getElementById("start_button").addEventListener("click", startButton);
 document.getElementById("copy_button").addEventListener("click", copyButton);
 document.getElementById("email_button").addEventListener("click", emailButton);
 document.getElementById("select_language").addEventListener("change", updateCountry);
-
-
