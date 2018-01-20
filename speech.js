@@ -157,8 +157,8 @@ if (!('webkitSpeechRecognition' in window)) {
     final_transcript = capitalize(final_transcript);
     final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
-    naturalLanguagePost(linebreak(interim_transcript));
     if (final_transcript || interim_transcript) {
+      naturalLanguagePost(final_transcript);
       showButtons('inline-block');
     }
   };
@@ -270,14 +270,14 @@ function naturalLanguagePost(content) {
     "method": "POST",
     "headers": {
       "content-type": "application/json",
-      "cache-control": "no-cache",
+      "cache-control": "no-cache"
     },
     "processData": false,
-    "data": postBody
+    "data": JSON.stringify(postBody)
   }
   $.ajax(settings).done(function (res) {
-    naturalLanguageResults = res;
-    $('#keycards').append(res);
+    naturalLanguageResults = JSON.stringify(res, null, '\t');
+    $('#keycards').text(naturalLanguageResults);
     console.log('res', res);
   });
 }
