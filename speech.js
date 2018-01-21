@@ -99,6 +99,8 @@ if (!('webkitSpeechRecognition' in window)) {
     recognizing = true;
     showInfo('info_speak_now');
     start_img.src = 'mic-animate.gif';
+
+
   };
 
   recognition.onerror = function(event) {
@@ -279,20 +281,23 @@ function naturalLanguagePost(content) {
     naturalLanguageResults = JSON.stringify(res, null, '\t');
     $('#keycards').text(naturalLanguageResults);
     console.log('res', res);
-    if(Array.isArray(res.entities)){
-      var keywords = [], output = {};
-      var result = res.entities;
-      result.forEach(function(word){
-        if(word.metadata.wikipedia_url){
-          output.name = word.name;
-          output.wiki = word.metadata.wikipedia_url;
-          keywords.push(output)
-        }
-      })
-      $('#tags').text(keywords);
-    }
+    // var res = { "entities": [ { "name": "Donald Trump", "type": "PERSON", "metadata": { "wikipedia_url": "https://en.wikipedia.org/wiki/Donald_Trump", "mid": "/m/0cqt90" }, "salience": 0.467794, "mentions": [ { "text": { "content": "Donald Trump", "beginOffset": -1 }, "type": "PROPER" } ] }, { "name": "New York", "type": "LOCATION", "metadata": { "mid": "/m/02_286", "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_City" }, "salience": 0.3021753, "mentions": [ { "text": { "content": "New York", "beginOffset": -1 }, "type": "PROPER" } ] }, { "name": "DACA", "type": "OTHER", "metadata": { "wikipedia_url": "https://en.wikipedia.org/wiki/Deferred_Action_for_Childhood_Arrivals", "mid": "/m/0n47q8y" }, "salience": 0.23003069, "mentions": [ { "text": { "content": "DACA", "beginOffset": -1 }, "type": "PROPER" } ] } ], "language": "en" };
+    // if(Array.isArray(res.entities)){
+    //   var keywords = [], output = {};
+    //   var result = res.entities;
+    //   result.forEach(function(word){
+    //     if(word.metadata.wikipedia_url){
+    //       output.name = word.name;
+    //       output.wiki = word.metadata.wikipedia_url;
+    //       keywords.push(output)
+    //     }
+    //   })
+    //   $('#tags').text(keywords);
+    // }
   });
 }
+
+
 
 document.getElementById("start_button").addEventListener("click", startButton);
 document.getElementById("copy_button").addEventListener("click", copyButton);

@@ -1,7 +1,7 @@
 jQuery(document).ready(function( $ ) {
 
 	$('.main-button').on('click', function(){
-		
+
 		$('#gradient').addClass('active');
 
 		var pulse = document.createElement("div");
@@ -11,10 +11,10 @@ jQuery(document).ready(function( $ ) {
 		var dot = document.createElement("div");
     	dot.className = "dot";
 		$('.main-button').append(dot);
-		
+
 		setTimeout(function(){
 			listen();
-		}, 3000); 
+		}, 3000);
 
     });
 
@@ -34,7 +34,7 @@ jQuery(document).ready(function( $ ) {
 
 		setTimeout(function(){
 			$('.broadcaster').slideDown();
-		}, 5000); 	    	
+		}, 5000);
 
     }
 
@@ -51,7 +51,7 @@ jQuery(document).ready(function( $ ) {
 		  [255,128,0]);
 
 		var step = 0;
-		//color table indices for: 
+		//color table indices for:
 		// current color left
 		// next color left
 		// current color right
@@ -63,9 +63,9 @@ jQuery(document).ready(function( $ ) {
 
 		function updateGradient()
 		{
-		  
+
 		  if ( $===undefined ) return;
-		  
+
 		var c0_0 = colors[colorIndices[0]];
 		var c0_1 = colors[colorIndices[1]];
 		var c1_0 = colors[colorIndices[2]];
@@ -85,19 +85,19 @@ jQuery(document).ready(function( $ ) {
 		 $('#gradient').css({
 		   background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
 		    background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
-		  
+
 		  step += gradientSpeed;
 		  if ( step >= 1 )
 		  {
 		    step %= 1;
 		    colorIndices[0] = colorIndices[1];
 		    colorIndices[2] = colorIndices[3];
-		    
+
 		    //pick two new target color indices
 		    //do not pick the same as the current one
 		    colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
 		    colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
-		    
+
 		  }
 		}
 
@@ -108,3 +108,31 @@ jQuery(document).ready(function( $ ) {
 	gradient();
 
 });
+
+
+function keywordClick(){
+  console.log("I'm in the function")
+  var jsonObject = { "entities": [ { "name": "Donald Trump", "type": "PERSON", "metadata": { "wikipedia_url": "https://en.wikipedia.org/wiki/Donald_Trump", "mid": "/m/0cqt90" }, "salience": 0.467794, "mentions": [ { "text": { "content": "Donald Trump", "beginOffset": -1 }, "type": "PROPER" } ] }, { "name": "New York", "type": "LOCATION", "metadata": { "mid": "/m/02_286", "wikipedia_url": "https://en.wikipedia.org/wiki/New_York_City" }, "salience": 0.3021753, "mentions": [ { "text": { "content": "New York", "beginOffset": -1 }, "type": "PROPER" } ] }, { "name": "DACA", "type": "OTHER", "metadata": { "wikipedia_url": "https://en.wikipedia.org/wiki/Deferred_Action_for_Childhood_Arrivals", "mid": "/m/0n47q8y" }, "salience": 0.23003069, "mentions": [ { "text": { "content": "DACA", "beginOffset": -1 }, "type": "PROPER" } ] } ], "language": "en" };
+  if(Array.isArray(jsonObject.entities)){
+    var keywords = [], output = {};
+    var result = jsonObject.entities;
+    result.forEach(function(word){
+      if(word.metadata.wikipedia_url){
+        output.name = word.name;
+        output.wiki = word.metadata.wikipedia_url;
+        keywords.push(output)
+      }
+    })
+    console.log(keywords)
+    // $('#tags').text(keywords);
+		for (i = 0; i < keywords.length; i++) {
+			var link = '';
+			 link += '<a href="#">';
+			 link += '<li>' + keywords[i].name + '</li>';
+			 link += '</a>';
+  		$(link).appendTo('#tags');
+}
+  }
+}
+
+keywordClick();
